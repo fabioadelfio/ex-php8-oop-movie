@@ -9,21 +9,27 @@ class Movie
 
     public $title;
     public $year;
-    public Genre $genre;
+    public array $genres;
     public $rating;
 
-    public function __construct($title, $year, Genre $genre, $rating, $poster)
+    public function __construct($title, $year, $genres, $rating, $poster)
     {
         $this->title = $title;
         $this->year = $year;
-        $this->genre = $genre;
+        $this->genres = $genres;
         $this->rating = $rating;
         $this->poster = $poster;
     }
 
     public function getGenres(): string
     {
-        return implode(', ', array_map(fn($genre) => $genre->name, $this->genres));
+        $names = [];
+
+        foreach ($this->genres as $genre) {
+            $names[] = $genre->name;
+        }
+
+        return implode(', ', $names);
     }
 
     public function getMovieInfo(): string
